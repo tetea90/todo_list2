@@ -1,30 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-function TodoList({ todo, index, completeTodo, removeTodo}) {
-    return (
-      <div className="todo"> 
-        <Checkbox />    
-            <div style={{textDecoration: Checkbox.checked ? "line-through" : "" }} >
-                {todo.text}
-            </div>
-        <div>
-          <button class = "button" onClick={() => removeTodo(index)}>Delete Task</button>
-        </div>
-      </div>
-    );
-  }
-
-  function Checkbox() {
-    const [checked, setChecked] = useState(false);
+function TodoList({ todo, index, toggleComplete, removeTodo}) {
   
-    return (
-      <label>
-        <input type="checkbox"
-          checked={checked}
-          onChange={() => setChecked(!checked)}
-        />
-      </label>
-    );
+  function Checkbox() {
+    toggleComplete(todo.index);
   }
+
+  return (
+    <div className="todo"> 
+        <input type = "checkbox" onClick={Checkbox}/> 
+          <div style={{textDecoration: todo.completed ? "line-through" : "" }} > 
+              {todo.text}
+          </div>
+      <div>
+        <button class = "button" onClick={() => removeTodo(index)}>Delete Task</button>
+      </div>
+    </div>
+  );
+}
 
 export default TodoList;

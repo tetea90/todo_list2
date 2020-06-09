@@ -1,23 +1,42 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import './App.css';
 import TodoForm from './Components/TodoForm';
 import TodoList from './Components/TodoList';
 import 'bulma/css/bulma.css';
 
+const LOCAL_STORAGE_KEY = "todo-list"
+
 function App() {
   
-  const [todos, setTodos] = useState([
-  ]);
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const storageTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+    if(storageTodos){
+      setTodos(storageTodos);
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = text => {
     const newTodos = [...todos, {text}];
     setTodos(newTodos);
   };
 
-  const completeTodo = index => {
-    const newTodos = [...todos];
-    newTodos[index].isComplete = true;
-    setTodos(newTodos);
+  const toggleComplete = index => {
+    setTodos(
+      todos.map(todo => {
+        if(todo.index === index) {
+          return {
+            ...todo,
+            completed: !todo.completed
+          };
+        }
+        return todo;
+      }))
   };
 
   const removeTodo = index => {
@@ -35,7 +54,7 @@ function App() {
                 key = {index}
                 index = {index}
                 todo = {todo}
-                completeTodo = {completeTodo}
+                toggleComplete = {toggleComplete}
                 removeTodo = {removeTodo}
               />
             ))}      
