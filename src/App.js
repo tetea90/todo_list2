@@ -39,23 +39,39 @@ function App() {
       }))
   };
 
+  const editTodo = (text, index) => {
+    setTodos(
+      todos.map(todo => {
+        if(todo.index === index){
+          return {...todo, text}
+        };
+        return todo;
+      }))
+  }
+
   const removeTodo = index => {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
   }
+
+  const clearList = () => {
+    setTodos([]);
+  }
+
   return (
     <div className="App">
       <div className="todo-list">
         <h3 class="title is-3" style={{textAlign: "center"}}>To-do list</h3>
-          <TodoForm addTodo={addTodo} />
+          <TodoForm addTodo={addTodo} clearList={clearList} />
             {todos.map((todo, index) => (
               <TodoList
                 key = {index}
-                index = {index}
+                index={index}
                 todo = {todo}
                 toggleComplete = {toggleComplete}
                 removeTodo = {removeTodo}
+                editTodo = {editTodo}
               />
             ))}      
       </div>

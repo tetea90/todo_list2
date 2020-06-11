@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-function TodoForm({ addTodo }) {
-    const [value, setValue] = useState("");
+function TodoForm({ addTodo, clearList,}) {
+    const [value, setValue] = useState([]);
   
     const handleSubmit = e => {
       e.preventDefault();
@@ -24,7 +24,8 @@ function TodoForm({ addTodo }) {
             </form>
           </div>
           <div class="control">
-            <button type="submit" class="button is-primary" onClick={handleSubmit}>Add</button>
+            <button type="submit" class="button is-success" onClick={handleSubmit}>Add</button>
+            <button type="submit" class="button is-danger" onClick={clearList}>Clear List</button>
           </div>
         </div>
       );
